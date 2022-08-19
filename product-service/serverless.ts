@@ -1,7 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
-import { getProductsList } from '@functions/products';
+import { getProductsList, getProductsById } from '@functions/products';
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -9,7 +8,7 @@ const serverlessConfiguration: AWS = {
   plugins: ['serverless-esbuild'],
   provider: {
     name: 'aws',
-    runtime: 'nodejs16.x',
+    runtime: 'nodejs14.x',
     region: 'eu-central-1',
     profile: 'js-cc4',
     stage: 'dev',
@@ -22,8 +21,7 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
     },
   },
-  // import the function via paths
-  functions: { hello, getProductsList },
+  functions: { getProductsList, getProductsById },
   package: { individually: true },
   custom: {
     esbuild: {

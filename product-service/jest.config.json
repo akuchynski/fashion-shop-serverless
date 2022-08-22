@@ -1,0 +1,13 @@
+{
+  "transform": {
+    "^.+\\.(j|t)sx?$": "esbuild-jest"
+  },
+  "moduleNameMapper": {
+    "^@functions/(.*)$": "<rootDir>/src/functions/$1",
+    "^@handlers/(.*)$": "<rootDir>/src/handlers/$1",
+    "^@libs/(.*)$": "<rootDir>/src/libs/$1",
+    "^@mocks/(.*)$": "<rootDir>/src/mocks/$1",
+    "^@models/(.*)$": "<rootDir>/src/models/$1",
+    "^@services/(.*)$": "<rootDir>/src/services/$1"
+  }
+}

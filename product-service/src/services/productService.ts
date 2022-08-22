@@ -1,13 +1,12 @@
-import { Product } from "../models/Product";
-import { products as data } from '../mocks/data';
+import { Product } from "@models/Product";
+import { products } from "@mocks/data/products";
 
 export default class ProductService {
-
   async getAllProducts(): Promise<Product[]> {
-    return Promise.resolve(data);
+    return Promise.resolve(products);
   }
 
   async getProductsById(id: string): Promise<Product> {
-    return Promise.resolve(data.find(item => item.id === id));
+    return Promise.resolve(products.find((item) => item.id === id));
   }
 }

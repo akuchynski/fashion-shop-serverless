@@ -4,7 +4,8 @@ export const getProductsList = {
     {
       http: {
         method: "get",
-        path: "products/",
+        path: "product",
+        cors: true,
       },
     },
   ],
@@ -16,7 +17,8 @@ export const getProductsById = {
     {
       http: {
         method: "get",
-        path: "products/{id}",
+        path: "product/{id}",
+        cors: true,
       },
     },
   ],

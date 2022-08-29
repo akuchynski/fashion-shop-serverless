@@ -16,3 +16,6 @@ jspm_packages
 logs
 *.log
 npm-debug.log*
+
+# Swagger files
+swagger

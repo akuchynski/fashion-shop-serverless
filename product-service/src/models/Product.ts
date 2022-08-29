@@ -5,3 +5,5 @@ export type Product = {
   title: string;
   count: number;
 };
+
+export type Products = Array<Product>;

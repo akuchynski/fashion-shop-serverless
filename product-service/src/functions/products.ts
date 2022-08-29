@@ -9,14 +9,14 @@ export const getProductsList = {
         swaggerTags: ["Products"],
         summary: "get all products",
         description: "Get All Products",
-        responses: {
+        responseData: {
           200: {
             description: "Successful API Response",
             bodyType: "Products",
           },
           500: {
             description: "Internal server error",
-            bodyType: "Error",
+            bodyType: "ErrorResponse",
           },
         },
       },
@@ -35,18 +35,18 @@ export const getProductsById = {
         swaggerTags: ["Products"],
         summary: "get product by id",
         description: "Get Product by id",
-        responses: {
+        responseData: {
           200: {
             description: "Successful API Response",
             bodyType: "Product",
           },
           404: {
             description: "Requested resource not found",
-            bodyType: "Error",
+            bodyType: "ErrorResponse",
           },
           500: {
             description: "Internal server error",
-            bodyType: "Error",
+            bodyType: "ErrorResponse",
           },
         },
       },

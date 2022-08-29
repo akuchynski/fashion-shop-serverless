@@ -43,7 +43,7 @@ const serverlessConfiguration: AWS = {
     },
     autoswagger: {
       title: "Product Service API",
-      typefiles: ["./src/models/Product.ts", "./src/models/Error.ts"],
+      typefiles: ["./src/models/Product.ts", "./src/models/ErrorResponse.ts"],
       generateSwaggerOnDeploy: true,
       basePath: "/dev",
       apiType: "http",

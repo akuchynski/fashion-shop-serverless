@@ -1,6 +1,10 @@
 import type { AWS } from "@serverless/typescript";
 
-import { getProductsList, getProductsById } from "@functions/products";
+import {
+  getProductsList,
+  getProductsById,
+  createProduct,
+} from "@functions/products";
 
 const serverlessConfiguration: AWS = {
   service: "product-service-andrei-kuchynski",
@@ -9,6 +13,7 @@ const serverlessConfiguration: AWS = {
     "serverless-auto-swagger",
     "serverless-esbuild",
     "serverless-offline",
+    "serverless-dynamodb-local",
   ],
   provider: {
     name: "aws",
@@ -28,7 +33,7 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
     },
   },
-  functions: { getProductsList, getProductsById },
+  functions: { getProductsList, getProductsById, createProduct },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -41,12 +46,46 @@ const serverlessConfiguration: AWS = {
       platform: "node",
       concurrency: 10,
     },
+    dynamodb: {
+      start: {
+        port: 5000,
+        inMemory: true,
+        migrate: true,
+      },
+      stages: "dev",
+    },
     autoswagger: {
       title: "Product Service API",
       typefiles: ["./src/models/Product.ts", "./src/models/ErrorResponse.ts"],
       generateSwaggerOnDeploy: true,
       basePath: "/dev",
       apiType: "http",
+    },
+  },
+  resources: {
+    Resources: {
+      ProductsTable: {
+        Type: "AWS::DynamoDB::Table",
+        Properties: {
+          TableName: "Products",
+          AttributeDefinitions: [
+            {
+              AttributeName: "id",
+              AttributeType: "S",
+            },
+          ],
+          KeySchema: [
+            {
+              AttributeName: "id",
+              KeyType: "HASH",
+            },
+          ],
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 1,
+            WriteCapacityUnits: 1,
+          },
+        },
+      },
     },
   },
 };

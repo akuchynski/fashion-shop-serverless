@@ -4,7 +4,7 @@ export const getProductsList = {
     {
       http: {
         method: "get",
-        path: "product",
+        path: "products",
         cors: true,
         swaggerTags: ["Products"],
         summary: "get all products",
@@ -30,7 +30,7 @@ export const getProductsById = {
     {
       http: {
         method: "get",
-        path: "product/{id}",
+        path: "products/{id}",
         cors: true,
         swaggerTags: ["Products"],
         summary: "get product by id",
@@ -56,7 +56,7 @@ export const createProduct = {
     {
       http: {
         method: "post",
-        path: "product",
+        path: "products",
         cors: true,
         swaggerTags: ["Products"],
         summary: "create product",

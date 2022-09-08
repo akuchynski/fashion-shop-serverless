@@ -5,8 +5,12 @@ import productService from "@services/index";
 
 export const handler = middyfy(
   async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-    const id = event.pathParameters.id;
-    const product = await productService.getProductsById(id);
-    return formatJSONResponse(product);
+    try {
+      const id = event.pathParameters.id;
+      const product = await productService.getProductsById(id);
+      return formatJSONResponse(200, product);
+    } catch (err) {
+      return formatJSONResponse(400, err);
+    }
   }
 );

@@ -22,7 +22,32 @@ const serverlessConfiguration: AWS = {
     profile: "js-cc4",
     stage: "dev",
     iam: {
-      role: "arn:aws:iam::398158581759:role/BasicLambdaExecutionRole",
+      role: {
+        permissionsBoundary:
+          "arn:aws:iam::${aws:accountId}:policy/eo_role_boundary",
+        statements: [
+          {
+            Effect: "Allow",
+            Action: "s3:*",
+            Resource: "*",
+          },
+          {
+            Effect: "Allow",
+            Action: [
+              "dynamodb:DescribeTable",
+              "dynamodb:Query",
+              "dynamodb:Scan",
+              "dynamodb:GetItem",
+              "dynamodb:PutItem",
+              "dynamodb:UpdateItem",
+              "dynamodb:DeleteItem",
+            ],
+            Resource: {
+              "Fn::GetAtt": ["ProductsTable", "Arn"],
+            },
+          },
+        ],
+      },
     },
     apiGateway: {
       minimumCompressionSize: 1024,

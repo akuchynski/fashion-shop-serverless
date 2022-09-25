@@ -4,7 +4,7 @@ export const getProductsList = {
     {
       http: {
         method: "get",
-        path: "product",
+        path: "products",
         cors: true,
         swaggerTags: ["Products"],
         summary: "get all products",
@@ -14,8 +14,8 @@ export const getProductsList = {
             description: "Successful API Response",
             bodyType: "Products",
           },
-          500: {
-            description: "Internal server error",
+          400: {
+            description: "Bad Request",
             bodyType: "ErrorResponse",
           },
         },
@@ -30,7 +30,7 @@ export const getProductsById = {
     {
       http: {
         method: "get",
-        path: "product/{id}",
+        path: "products/{id}",
         cors: true,
         swaggerTags: ["Products"],
         summary: "get product by id",
@@ -40,12 +40,34 @@ export const getProductsById = {
             description: "Successful API Response",
             bodyType: "Product",
           },
-          404: {
-            description: "Requested resource not found",
+          400: {
+            description: "Bad Request",
             bodyType: "ErrorResponse",
           },
-          500: {
-            description: "Internal server error",
+        },
+      },
+    },
+  ],
+};
+
+export const createProduct = {
+  handler: "src/handlers/createProduct.handler",
+  events: [
+    {
+      http: {
+        method: "post",
+        path: "products",
+        cors: true,
+        swaggerTags: ["Products"],
+        summary: "create product",
+        description: "Create Product",
+        responseData: {
+          201: {
+            description: "Successful API Response",
+            bodyType: "Product",
+          },
+          400: {
+            description: "Bad Request",
             bodyType: "ErrorResponse",
           },
         },

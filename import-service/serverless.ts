@@ -36,7 +36,7 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
-      BUCKET_NAME: "import-service-bucket-andrei-kuchynski",
+      BUCKET_NAME: "import-service-andrei-kuchynski",
       UPLOADED_FOLDER_NAME: "uploaded",
       PARSED_FOLDER_NAME: "parsed",
       BUCKET_REGION: "eu-central-1",
@@ -44,6 +44,16 @@ const serverlessConfiguration: AWS = {
   },
   functions: { importProductsFile, importFileParser },
   package: { individually: true },
+  resources: {
+    extensions: {
+      IamRoleCustomResourcesLambdaExecution: {
+        Properties: {
+          PermissionsBoundary:
+            "arn:aws:iam::${aws:accountId}:policy/eo_role_boundary",
+        },
+      },
+    },
+  },
   custom: {
     esbuild: {
       bundle: true,

@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { formatJSONResponse } from "@libs/api-gateway";
 import { middyfy } from "@libs/lambda";
 import fileService from "@services/index";
+import { formatJSONResponse } from "@libs/api-gateway";
 
 export const importProductsFile = async (
   event: APIGatewayProxyEvent

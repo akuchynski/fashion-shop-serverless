@@ -21,44 +21,49 @@ export default class FileService {
     return getSignedUrl(this.s3Client, command, { expiresIn: 3600 });
   }
 
-  async getFileData(fileName: string): Promise<Product[]> {
+  async getFileData(fileKey: string): Promise<Product[]> {
     const getObjectCommand = new GetObjectCommand({
       Bucket: process.env.BUCKET_NAME,
-      Key: fileName,
+      Key: fileKey,
     });
 
     const fileData = [];
     const getObjectOutput = await this.s3Client.send(getObjectCommand);
     const readableStream = getObjectOutput.Body as Readable;
 
-    new Promise<Product[]>((resolve, reject) => {
+    const result = new Promise<Product[]>((resolve, reject) => {
       readableStream
         .pipe(csvParser())
         .on("error", () => reject("Error while parsing the stream"))
-        .on("data", (item) => fileData.push(item as Product))
+        .on("data", (item) => fileData.push(item))
         .on("end", () => resolve(fileData));
     });
 
-    await this.moveFile(fileName);
-    return fileData;
+    console.log("Parsed fileData: ", JSON.stringify(fileData));
+    await this.moveFile(fileKey);
+    return result;
   }
 
-  private async moveFile(fileName: string) {
-    console.log("Move file to parsed folder: ", fileName);
+  private async moveFile(fileKey: string) {
+    console.log("Moving file to parsed folder: ", fileKey);
+    const parsedFileKey = fileKey.replace(
+      process.env.UPLOADED_FOLDER_NAME,
+      process.env.PARSED_FOLDER_NAME
+    );
     const copyObjectParams = {
       Bucket: process.env.BUCKET_NAME,
-      CopySource: `${process.env.UPLOADED_FOLDER_NAME}/${fileName}`,
-      Key: `${process.env.PARSED_FOLDER_NAME}/${fileName}`,
+      CopySource: fileKey,
+      Key: parsedFileKey,
     };
 
     await this.s3Client.send(new CopyObjectCommand(copyObjectParams));
 
     const deleteObjectParams = {
       Bucket: process.env.BUCKET_NAME,
-      Key: `${process.env.UPLOADED_FOLDER_NAME}/${fileName}`,
+      Key: fileKey,
     };
 
     await this.s3Client.send(new DeleteObjectCommand(deleteObjectParams));
-    console.log("File moved successfully: ", fileName);
+    console.log("File moved successfully: ", parsedFileKey);
   }
 }

@@ -1,16 +1,16 @@
 import { S3Event } from "aws-lambda";
-import { formatJSONResponse } from "@libs/api-gateway";
 import { middyfy } from "@libs/lambda";
 import fileService from "@services/index";
+import { formatJSONResponse } from "@libs/api-gateway";
 
 export const importFileParser = async (event: S3Event) => {
   let products = [];
   try {
     await Promise.all(
       event.Records.map(async (record) => {
-        const fileName = record.s3.object.key;
-        console.log("Parsing file from S3: ", fileName);
-        products = await fileService.getFileData(fileName);
+        const fileKey = record.s3.object.key;
+        console.log("Parsing file from S3: ", fileKey);
+        products = await fileService.getFileData(fileKey);
         console.log("Parsed products data: ", JSON.stringify(products));
       })
     );

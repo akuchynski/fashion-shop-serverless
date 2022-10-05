@@ -16,7 +16,7 @@ export const importFileParser = {
   events: [
     {
       s3: {
-        bucket: "import-service-bucket-andrei-kuchynski",
+        bucket: "import-service-andrei-kuchynski",
         event: "s3:ObjectCreated:*",
         rules: [
           {

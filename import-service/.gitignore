@@ -1,0 +1,21 @@
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# esbuild directories
+.esbuild
+
+# IntelliJ IDEA directories
+.idea
+*.iml
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# AWS
+.dynamodb

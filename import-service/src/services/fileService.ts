@@ -52,7 +52,7 @@ export default class FileService {
     );
     const copyObjectParams = {
       Bucket: process.env.BUCKET_NAME,
-      CopySource: fileKey,
+      CopySource: `${process.env.BUCKET_NAME}/${fileKey}`,
       Key: parsedFileKey,
     };
 

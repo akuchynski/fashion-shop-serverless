@@ -10,7 +10,6 @@ import {
 import { Readable } from "stream";
 import csvParser from "csv-parser";
 import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
-import { getAttributesFromCsvRow } from "../utils/sqsMessageConverter";
 
 export default class FileService {
   constructor(
@@ -42,30 +41,25 @@ export default class FileService {
         .on("error", () => reject("Error while parsing the stream"))
         .on("data", (rowItem) => {
           fileData.push(rowItem);
-          this.sendMessageToQueue(rowItem);
+          this.sendMessageToQueue(JSON.stringify(rowItem));
         })
         .on("end", () => resolve(fileData));
     });
 
-    console.log("Parsed fileData: ", JSON.stringify(fileData));
     await this.moveFile(fileKey);
     return result;
   }
 
-  private async sendMessageToQueue(rowItem: any) {
+  private async sendMessageToQueue(data: string) {
     try {
       await this.sqsClient.send(
         new SendMessageCommand({
-          MessageAttributes: getAttributesFromCsvRow(rowItem),
-          MessageBody: "Product Item Data",
+          MessageBody: data,
           QueueUrl: process.env.SQS_QUEUE_URL,
         })
       );
     } catch (e) {
-      console.error(
-        "Error during message sending to SQS. Data item :",
-        JSON.stringify(rowItem)
-      );
+      console.error("Error while sending to SQS. Data:", data);
     }
   }
 

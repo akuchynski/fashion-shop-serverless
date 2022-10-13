@@ -34,8 +34,7 @@ const serverlessConfiguration: AWS = {
           {
             Effect: "Allow",
             Action: ["sqs:*"],
-            Resource:
-              "arn:aws:sqs:eu-central-1:398158581759:catalogItemsQueueAkuchynski",
+            Resource: "${self:provider.environment.SQS_QUEUE_ARN}",
           },
         ],
       },
@@ -52,6 +51,8 @@ const serverlessConfiguration: AWS = {
       PARSED_FOLDER_NAME: "parsed",
       AWS_FRANKFURT_REGION: "eu-central-1",
       SQS_NAME: "catalogItemsQueueAkuchynski",
+      SQS_QUEUE_ARN:
+        "arn:aws:sqs:eu-central-1:398158581759:catalogItemsQueueAkuchynski",
       SQS_QUEUE_URL:
         "https://sqs.eu-central-1.amazonaws.com/398158581759/catalogItemsQueueAkuchynski",
     },

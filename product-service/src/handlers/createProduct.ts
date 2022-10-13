@@ -7,7 +7,7 @@ import {
 } from "@libs/api-gateway";
 import { middyfy } from "@libs/lambda";
 import { inputSchema, outputSchema } from "../schemas/productSchema";
-import productService from "@services/index";
+import { productService } from "@services/index";
 
 const createProductHandler: ValidatedEventAPIGatewayProxyEvent<
   typeof inputSchema

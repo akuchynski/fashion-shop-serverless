@@ -75,3 +75,16 @@ export const createProduct = {
     },
   ],
 };
+
+export const catalogBatchProcess = {
+  handler: "src/handlers/catalogBatchProcess.handler",
+  events: [
+    {
+      sqs: {
+        batchSize: 5,
+        maximumBatchingWindow: 10,
+        arn: "${self:provider.environment.SQS_QUEUE_ARN}",
+      },
+    },
+  ],
+};

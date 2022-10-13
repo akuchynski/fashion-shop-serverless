@@ -34,4 +34,8 @@ export default class ProductService {
       .promise();
     return product;
   }
+
+  async createProducts(products: Product[]): Promise<Product[]> {
+    return Promise.all(products.map((product) => this.createProduct(product)));
+  }
 }

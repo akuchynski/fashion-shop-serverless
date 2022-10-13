@@ -31,6 +31,12 @@ const serverlessConfiguration: AWS = {
             Action: ["s3:*"],
             Resource: "arn:aws:s3:::${self:provider.environment.BUCKET_NAME}/*",
           },
+          {
+            Effect: "Allow",
+            Action: ["sqs:*"],
+            Resource:
+              "arn:aws:sqs:eu-central-1:398158581759:catalogItemsQueueAkuchynski",
+          },
         ],
       },
     },
@@ -44,7 +50,10 @@ const serverlessConfiguration: AWS = {
       BUCKET_NAME: "import-service-andrei-kuchynski",
       UPLOADED_FOLDER_NAME: "uploaded",
       PARSED_FOLDER_NAME: "parsed",
-      BUCKET_REGION: "eu-central-1",
+      AWS_FRANKFURT_REGION: "eu-central-1",
+      SQS_NAME: "catalogItemsQueueAkuchynski",
+      SQS_QUEUE_URL:
+        "https://sqs.eu-central-1.amazonaws.com/398158581759/catalogItemsQueueAkuchynski",
     },
   },
   functions: { importProductsFile, importFileParser },

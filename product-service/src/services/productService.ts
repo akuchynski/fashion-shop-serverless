@@ -1,4 +1,5 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
+import { v4 as uuidv4 } from "uuid";
 import Product from "@models/Product";
 
 export default class ProductService {
@@ -26,10 +27,11 @@ export default class ProductService {
   }
 
   async createProduct(product: Product): Promise<Product> {
+    const id = uuidv4();
     await this.docClient
       .put({
         TableName: this.TableName,
-        Item: product,
+        Item: { ...product, id },
       })
       .promise();
     return product;

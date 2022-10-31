@@ -39,9 +39,9 @@ export default class FileService {
       readableStream
         .pipe(csvParser())
         .on("error", () => reject("Error while parsing the stream"))
-        .on("data", (rowItem) => {
+        .on("data", async (rowItem) => {
           fileData.push(rowItem);
-          this.sendMessageToQueue(JSON.stringify(rowItem));
+          await this.sendMessageToQueue(JSON.stringify(rowItem));
         })
         .on("end", () => resolve(fileData));
     });

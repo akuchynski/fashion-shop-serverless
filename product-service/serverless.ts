@@ -4,6 +4,7 @@ import {
   getProductsList,
   getProductsById,
   createProduct,
+  catalogBatchProcess,
 } from "@functions/products";
 
 const serverlessConfiguration: AWS = {
@@ -46,6 +47,16 @@ const serverlessConfiguration: AWS = {
               "Fn::GetAtt": ["ProductsTable", "Arn"],
             },
           },
+          {
+            Effect: "Allow",
+            Action: ["sns:*"],
+            Resource: "${self:provider.environment.SNS_TOPIC_ARN}",
+          },
+          {
+            Effect: "Allow",
+            Action: ["sqs:*"],
+            Resource: "${self:provider.environment.SQS_QUEUE_ARN}",
+          },
         ],
       },
     },
@@ -56,9 +67,19 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
+      AWS_FRANKFURT_REGION: "eu-central-1",
+      SQS_QUEUE_ARN:
+        "arn:aws:sqs:eu-central-1:398158581759:catalogItemsQueueAkuchynski",
+      SNS_TOPIC_ARN:
+        "arn:aws:sns:eu-central-1:398158581759:createProductTopicAkuchynski",
     },
   },
-  functions: { getProductsList, getProductsById, createProduct },
+  functions: {
+    getProductsList,
+    getProductsById,
+    createProduct,
+    catalogBatchProcess,
+  },
   package: { individually: true },
   custom: {
     esbuild: {

@@ -3,7 +3,7 @@ import { formatJSONResponse } from "@libs/api-gateway";
 import validator from "@middy/validator";
 import { middyfy } from "@libs/lambda";
 import { outputSchema } from "../schemas/productSchema";
-import productService from "@services/index";
+import { productService } from "@services/index";
 
 export const getProductHandler = async (
   event: APIGatewayProxyEvent

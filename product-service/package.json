@@ -12,6 +12,7 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
+    "@aws-sdk/client-sns": "^3.186.0",
     "@middy/core": "^2.5.3",
     "@middy/error-logger": "^3.2.0",
     "@middy/http-error-handler": "^3.3.1",

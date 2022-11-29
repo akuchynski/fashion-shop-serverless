@@ -55,6 +55,8 @@ const serverlessConfiguration: AWS = {
         "arn:aws:sqs:eu-central-1:398158581759:catalogItemsQueueAkuchynski",
       SQS_QUEUE_URL:
         "https://sqs.eu-central-1.amazonaws.com/398158581759/catalogItemsQueueAkuchynski",
+      AUTHORIZER_ARN:
+        "arn:aws:lambda:eu-central-1:398158581759:function:authorization-service-akuchynski-dev-basicAuthorizer",
     },
   },
   functions: { importProductsFile, importFileParser },

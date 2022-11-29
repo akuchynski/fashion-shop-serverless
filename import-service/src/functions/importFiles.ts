@@ -6,6 +6,12 @@ export const importProductsFile = {
         method: "get",
         path: "import",
         cors: true,
+        authorizer: {
+          arn: "${self:provider.environment.AUTHORIZER_ARN}",
+          resultTtlInSeconds: 0,
+          identitySource: "method.request.header.Authorization",
+          type: "token",
+        },
       },
     },
   ],
